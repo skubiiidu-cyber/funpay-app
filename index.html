@@ -8,149 +8,164 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap');
 
+        /* Базовые стили */
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body {
             font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
-            background-color: #F5F7FA; /* Светлый фон */
+            background-color: #F8FAFC;
             color: #1A1A1A;
             margin: 0;
             padding: 20px;
             padding-bottom: 40px;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
         }
 
+        /* Живой фон (Blobs) */
+        .blob {
+            position: absolute; border-radius: 50%; filter: blur(60px); z-index: -1; opacity: 0.6;
+            animation: move 10s infinite alternate;
+        }
+        .blob-1 { width: 300px; height: 300px; background: #BFDBFE; top: -50px; left: -50px; }
+        .blob-2 { width: 250px; height: 250px; background: #DBEAFE; bottom: 20%; right: -50px; animation-delay: -5s; }
+        @keyframes move { 0% { transform: translate(0, 0) scale(1); } 100% { transform: translate(30px, 50px) scale(1.2); } }
+
+        /* Анимации появления */
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .anim { animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) both; }
+        .delay-1 { animation-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; }
+        .delay-3 { animation-delay: 0.3s; }
+
         /* Шапка */
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 25px;
-        }
-        .logo { 
-            font-size: 22px; 
-            font-weight: 800; 
-            color: #2563EB; /* Синий */
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
+        .logo { font-size: 22px; font-weight: 800; color: #2563EB; display: flex; align-items: center; gap: 10px; }
         .logo-icon {
-            width: 32px;
-            height: 32px;
-            background: #2563EB;
-            border-radius: 8px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: white;
-            font-size: 18px;
+            width: 36px; height: 36px; background: #2563EB; border-radius: 10px;
+            display: flex; justify-content: center; align-items: center; color: white; font-size: 20px;
+            box-shadow: 0 4px 10px rgba(37, 99, 235, 0.3);
         }
         .user-profile {
-            background: #FFFFFF;
-            padding: 8px 12px;
-            border-radius: 20px;
-            font-size: 13px;
-            font-weight: 600;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(10px);
+            padding: 8px 12px; border-radius: 20px; font-size: 13px; font-weight: 600;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05); display: flex; align-items: center; gap: 8px;
         }
-        .user-avatar {
-            width: 24px;
-            height: 24px;
-            background: #E2E8F0;
-            border-radius: 50%;
-        }
+        .user-avatar { width: 24px; height: 24px; background: #E2E8F0; border-radius: 50%; }
 
         /* Главный баннер */
         .hero {
-            background: linear-gradient(135deg, #2563EB, #3B82F6);
-            padding: 24px;
-            border-radius: 20px;
-            margin-bottom: 20px;
-            color: white;
-            box-shadow: 0 10px 25px rgba(37, 99, 235, 0.3);
+            background: linear-gradient(135deg, #2563EB, #1E40AF); 
+            padding: 24px; border-radius: 24px; margin-bottom: 25px; color: white;
+            box-shadow: 0 15px 30px rgba(37, 99, 235, 0.4); position: relative; overflow: hidden;
         }
-        .hero h1 { margin: 0 0 10px 0; font-size: 22px; font-weight: 800; line-height: 1.3; }
-        .hero p { margin: 0; font-size: 14px; color: #E0E7FF; line-height: 1.5; }
-        
-        /* Карточки */
+        .hero-content { position: relative; z-index: 2; width: 65%; }
+        .hero h1 { margin: 0 0 10px 0; font-size: 20px; font-weight: 800; line-height: 1.3; }
+        .hero p { margin: 0; font-size: 13px; color: #E0E7FF; line-height: 1.4; }
+        .hero-image {
+            position: absolute; right: -20px; bottom: -20px; width: 160px; 
+            z-index: 1; filter: drop-shadow(0 10px 10px rgba(0,0,0,0.2));
+            animation: float 3s ease-in-out infinite;
+        }
+        @keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-10px); } 100% { transform: translateY(0px); } }
+
+        /* Статистика (Соц. доказательство) */
+        .stats-bar {
+            display: flex; justify-content: space-around; background: rgba(255,255,255,0.6);
+            backdrop-filter: blur(10px); border-radius: 16px; padding: 15px; margin-bottom: 20px;
+            border: 1px solid rgba(255,255,255,0.8); box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+        }
+        .stat-item { text-align: center; }
+        .stat-value { font-size: 18px; font-weight: 800; color: #1E40AF; }
+        .stat-label { font-size: 11px; color: #64748B; font-weight: 600; text-transform: uppercase; }
+
+        /* Карточки (Glassmorphism) */
         .card {
-            background: #FFFFFF;
-            padding: 20px;
-            border-radius: 20px;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
-            border: 1px solid #F1F5F9;
+            background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(15px);
+            padding: 20px; border-radius: 20px; margin-bottom: 15px;
+            display: flex; align-items: center; justify-content: space-between;
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.07); border: 1px solid rgba(255, 255, 255, 0.18);
+            transition: transform 0.2s;
         }
-        .card-left h2 { margin: 0; font-size: 32px; color: #2563EB; font-weight: 800; }
-        .card-left p { margin: 5px 0 0 0; font-size: 13px; color: #64748B; font-weight: 600; }
-        
+        .card:active { transform: scale(0.97); }
+        .card-left { display: flex; align-items: center; gap: 15px; }
+        .card-icon { width: 50px; height: 50px; }
+        .card-text h2 { margin: 0; font-size: 28px; color: #2563EB; font-weight: 800; }
+        .card-text p { margin: 3px 0 0 0; font-size: 13px; color: #64748B; font-weight: 600; }
         .card-right {
-            background: #EFF6FF;
-            color: #2563EB;
-            padding: 10px 15px;
-            border-radius: 12px;
-            font-size: 13px;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 5px;
+            background: #EFF6FF; color: #2563EB; padding: 10px 15px; border-radius: 12px;
+            font-size: 13px; font-weight: 700;
         }
 
-        /* Информационный блок */
+        /* Инфо-блок */
         .info-block {
-            background: #FFFFFF;
-            padding: 20px;
-            border-radius: 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
-            border: 1px solid #F1F5F9;
+            background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(15px);
+            padding: 20px; border-radius: 20px; margin-bottom: 25px;
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.07); border: 1px solid rgba(255, 255, 255, 0.18);
+            display: flex; gap: 15px; align-items: flex-start;
         }
-        .info-block h3 { margin: 0 0 10px 0; font-size: 16px; font-weight: 700; color: #1A1A1A; display: flex; align-items: center; gap: 10px;}
-        .info-block p { margin: 0; font-size: 14px; color: #64748B; line-height: 1.5; }
+        .info-icon { width: 40px; height: 40px; }
+        .info-text h3 { margin: 0 0 8px 0; font-size: 15px; font-weight: 700; color: #1A1A1A; }
+        .info-text p { margin: 0; font-size: 13px; color: #64748B; line-height: 1.5; }
+
+        /* Блок отзывов */
+        .reviews-title { font-size: 16px; font-weight: 800; margin-bottom: 15px; color: #1E293B; padding-left: 5px; }
+        .review-card {
+            background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(10px);
+            padding: 15px; border-radius: 16px; margin-bottom: 10px;
+            border-left: 4px solid #2563EB; box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+        }
+        .review-header { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+        .review-avatar { width: 30px; height: 30px; border-radius: 50%; background: #DBEAFE; display: flex; align-items: center; justify-content: center; font-size: 14px; }
+        .review-name { font-size: 14px; font-weight: 700; color: #1E293B; }
+        .review-stars { font-size: 12px; color: #F59E0B; }
+        .review-text { font-size: 13px; color: #475569; line-height: 1.4; font-style: italic; }
 
         /* Кнопки */
         .btn {
-            background: #2563EB;
-            color: white;
-            border: none;
-            padding: 18px;
-            width: 100%;
-            border-radius: 16px;
-            font-size: 16px;
-            font-weight: 700;
-            font-family: 'Montserrat', sans-serif;
-            cursor: pointer;
-            margin-top: 10px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 10px;
-            transition: background 0.2s;
-            box-shadow: 0 5px 15px rgba(37, 99, 235, 0.2);
+            background: linear-gradient(135deg, #2563EB, #1D4ED8); 
+            color: white; border: none; padding: 18px; width: 100%; border-radius: 18px;
+            font-size: 16px; font-weight: 700; font-family: 'Montserrat', sans-serif; cursor: pointer;
+            margin-top: 10px; display: flex; justify-content: center; align-items: center; gap: 10px;
+            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1); 
+            box-shadow: 0 10px 20px rgba(37, 99, 235, 0.3);
         }
-        .btn:active { background: #1D4ED8; transform: scale(0.98); }
-        
-        .btn-support {
-            background: #FFFFFF;
-            color: #2563EB;
-            border: 2px solid #EFF6FF;
-            box-shadow: none;
+        .btn:active { transform: scale(0.95); box-shadow: 0 5px 10px rgba(37, 99, 235, 0.2); }
+        .btn-support { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(10px); color: #2563EB; border: 2px solid #EFF6FF; box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
+
+        /* Модальное окно (Форма) */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(4px);
+            display: none; justify-content: center; align-items: flex-end;
+            z-index: 1000; opacity: 0; transition: opacity 0.3s;
         }
-        .btn-support:active { background: #EFF6FF; }
+        .modal-overlay.active { display: flex; opacity: 1; }
+        .modal {
+            background: white; width: 100%; max-width: 500px; border-radius: 24px 24px 0 0; padding: 25px 20px;
+            transform: translateY(100%); transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .modal-overlay.active .modal { transform: translateY(0); }
+        .modal h2 { margin: 0 0 20px 0; font-size: 20px; color: #1A1A1A; text-align: center; font-weight: 800; }
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; font-size: 13px; color: #64748B; margin-bottom: 5px; font-weight: 600; }
+        .form-group input, .form-group select {
+            width: 100%; padding: 14px; border: 1px solid #E2E8F0; background: #F8FAFC; border-radius: 12px;
+            font-size: 14px; font-family: 'Montserrat', sans-serif; outline: none; transition: border 0.2s;
+        }
+        .form-group input:focus { border-color: #2563EB; background: #FFF; }
+        .btn-close { background: #F1F5F9; color: #64748B; margin-top: 10px; box-shadow: none; }
     </style>
 </head>
 <body>
 
+    <!-- Живой фон -->
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+
     <!-- Шапка -->
-    <div class="header">
-        <div class="logo">
-            <div class="logo-icon">💸</div>
-            FUNPAY
-        </div>
+    <div class="header anim delay-1">
+        <div class="logo"><div class="logo-icon">💸</div>FUNPAY</div>
         <div class="user-profile">
             <div class="user-avatar"></div>
             <span id="user-name">Загрузка...</span>
@@ -158,64 +173,160 @@
     </div>
 
     <!-- Главный баннер -->
-    <div class="hero">
-        <h1>Безопасные сделки с подарками Telegram</h1>
-        <p>Создай предложение, отправь ссылку покупателю и общайся в Telegram. Гарант защитит ваши средства.</p>
+    <div class="hero anim delay-1">
+        <div class="hero-content">
+            <h1>Безопасные сделки</h1>
+            <p>Создай предложение, отправь ссылку покупателю. Гарант защитит средства.</p>
+        </div>
+        <img src="https://cdn3d.iconscout.com/3d/premium/thumb/money-transfer-4990082-4161239.png" class="hero-image" alt="Money">
+    </div>
+
+    <!-- Статистика -->
+    <div class="stats-bar anim delay-2">
+        <div class="stat-item">
+            <div class="stat-value">1,248</div>
+            <div class="stat-label">Сделок</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-value">3.2M</div>
+            <div class="stat-label">Оборот ₽</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-value">4.9</div>
+            <div class="stat-label">Рейтинг</div>
+        </div>
     </div>
 
     <!-- Карточки -->
-    <div class="card">
+    <div class="card anim delay-2">
         <div class="card-left">
-            <h2>20%</h2>
-            <p>Реферальная программа</p>
+            <img src="https://cdn3d.iconscout.com/3d/premium/thumb/gift-box-4990085-4161242.png" class="card-icon" alt="Gift">
+            <div class="card-text">
+                <h2>20%</h2>
+                <p>Реферальная программа</p>
+            </div>
         </div>
-        <div class="card-right">⭐ Приглашай друзей</div>
+        <div class="card-right">Приглашай</div>
     </div>
 
-    <div class="card">
+    <div class="card anim delay-2">
         <div class="card-left">
-            <h2>1%</h2>
-            <p>Комиссия сервиса</p>
+            <img src="https://cdn3d.iconscout.com/3d/premium/thumb/security-shield-4990086-4161243.png" class="card-icon" alt="Shield">
+            <div class="card-text">
+                <h2>1%</h2>
+                <p>Комиссия сервиса</p>
+            </div>
         </div>
-        <div class="card-right">🛡️ Деньги у гаранта</div>
+        <div class="card-right">Гарант</div>
     </div>
 
     <!-- Инфо блок -->
-    <div class="info-block">
-        <h3>🛡️ Проводите оплату только через бота</h3>
-        <p>Не переводите деньги и не передавайте аккаунты напрямую — так сделка будет безопаснее. Все операции проходят через нашего гаранта.</p>
+    <div class="info-block anim delay-3">
+        <img src="https://cdn3d.iconscout.com/3d/premium/thumb/secure-payment-4990084-4161241.png" class="info-icon" alt="Secure">
+        <div class="info-text">
+            <h3>Оплата только через бота</h3>
+            <p>Не переводите деньги напрямую — так сделка будет безопаснее. Все операции проходят через гаранта.</p>
+        </div>
+    </div>
+
+    <!-- Отзывы -->
+    <div class="reviews-title anim delay-3">Отзывы наших клиентов 💬</div>
+    
+    <div class="review-card anim delay-3">
+        <div class="review-header">
+            <div class="review-avatar">👨‍💻</div>
+            <div>
+                <div class="review-name">@alex_dev</div>
+                <div class="review-stars">★★★★★</div>
+            </div>
+        </div>
+        <div class="review-text">"Продал подарок за 5 минут. Деньги пришли моментально после подтверждения. Огонь!"</div>
+    </div>
+
+    <div class="review-card anim delay-3">
+        <div class="review-header">
+            <div class="review-avatar">👩‍💼</div>
+            <div>
+                <div class="review-name">@maria_n</div>
+                <div class="review-stars">★★★★★</div>
+            </div>
+        </div>
+        <div class="review-text">"Очень удобно, что есть гарант. Покупатель боялся кинуть, но всё прошло гладко."</div>
     </div>
 
     <!-- Кнопки -->
-    <button class="btn" onclick="createDeal()">
-        ➡️ Создать сделку
-    </button>
-    
-    <button class="btn btn-support" onclick="openSupport()">
-        💬 Служба поддержки (@keucu)
-    </button>
+    <button class="btn anim delay-3" onclick="openModal()">➡️ Создать сделку</button>
+    <button class="btn btn-support anim delay-3" onclick="openSupport()">💬 Служба поддержки (@keucu)</button>
+
+    <!-- Модальное окно (Форма создания) -->
+    <div class="modal-overlay" id="dealModal">
+        <div class="modal">
+            <h2>Новая сделка</h2>
+            <div class="form-group">
+                <label>Что продаете?</label>
+                <input type="text" id="itemName" placeholder="Например: Подарок Мишка">
+            </div>
+            <div class="form-group">
+                <label>Цена</label>
+                <input type="number" id="itemPrice" placeholder="100">
+            </div>
+            <div class="form-group">
+                <label>Валюта</label>
+                <select id="itemCurrency">
+                    <option value="RUB">Рубли (RUB)</option>
+                    <option value="USDT">USDT</option>
+                    <option value="TON">TON</option>
+                    <option value="STARS">Звезды</option>
+                </select>
+            </div>
+            <button class="btn" onclick="submitDeal()">Отправить в бота</button>
+            <button class="btn btn-close" onclick="closeModal()">Отмена</button>
+        </div>
+    </div>
 
     <script>
-        // Инициализация Telegram WebApp
         const tg = window.Telegram.WebApp;
-        tg.expand(); // Разворачиваем окно на весь экран
-        tg.headerColor = '#F5F7FA'; // Цвет шапки Telegram
-        tg.backgroundColor = '#F5F7FA'; // Цвет фона
+        tg.expand();
+        tg.headerColor = '#F8FAFC';
+        tg.backgroundColor = '#F8FAFC';
 
-        // Показываем имя пользователя
         if (tg.initDataUnsafe.user) {
             const user = tg.initDataUnsafe.user;
-            const displayName = user.username ? '@' + user.username : user.first_name;
-            document.getElementById('user-name').innerText = displayName;
+            document.getElementById('user-name').innerText = user.username ? '@' + user.username : user.first_name;
         }
 
-        // Действия при нажатии на кнопки
-        function createDeal() {
-            tg.showAlert("Форма создания сделки находится в разработке! Скоро тут будет ввод данных.");
+        function openModal() {
+            document.getElementById('dealModal').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('dealModal').classList.remove('active');
+        }
+
+        function submitDeal() {
+            const item = document.getElementById('itemName').value;
+            const price = document.getElementById('itemPrice').value;
+            const currency = document.getElementById('itemCurrency').value;
+
+            if (!item || !price) {
+                tg.showAlert("Заполните все поля!");
+                return;
+            }
+
+            const data = {
+                action: "create_deal",
+                item: item,
+                price: price,
+                currency: currency
+            };
+
+            tg.sendData(JSON.stringify(data));
+            tg.showAlert("Данные отправлены в бота!");
+            closeModal();
         }
 
         function openSupport() {
-            tg.openTelegramLink('https://t.me/keucu'); // Открывает чат с поддержкой
+            tg.openTelegramLink('https://t.me/keucu');
         }
     </script>
 </body>
