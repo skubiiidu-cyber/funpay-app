@@ -63,6 +63,8 @@
         .hero-content { position: relative; z-index: 2; width: 70%; }
         .hero h1 { margin: 0 0 10px 0; font-size: 20px; font-weight: 800; line-height: 1.3; }
         .hero p { margin: 0; font-size: 13px; color: #E0E7FF; line-height: 1.4; }
+        
+        /* Картинка в баннере (SVG) */
         .hero-image {
             position: absolute; right: 10px; bottom: 10px; width: 80px; height: 80px;
             z-index: 1; opacity: 0.9; animation: float 3s ease-in-out infinite;
@@ -89,10 +91,16 @@
         }
         .card:active { transform: scale(0.97); }
         .card-left { display: flex; align-items: center; gap: 15px; }
+        
+        /* Иконки в карточках (SVG) */
         .card-icon { width: 45px; height: 45px; }
+        
         .card-text h2 { margin: 0; font-size: 28px; color: #2563EB; font-weight: 800; }
         .card-text p { margin: 3px 0 0 0; font-size: 13px; color: #64748B; font-weight: 600; }
-        .card-right { background: #EFF6FF; color: #2563EB; padding: 10px 15px; border-radius: 12px; font-size: 13px; font-weight: 700; }
+        .card-right {
+            background: #EFF6FF; color: #2563EB; padding: 10px 15px; border-radius: 12px;
+            font-size: 13px; font-weight: 700;
+        }
 
         /* Инфо-блок */
         .info-block {
@@ -118,8 +126,6 @@
             display: flex; justify-content: center; align-items: center; font-size: 12px; font-weight: 800; flex-shrink: 0;
         }
         .step-text { font-size: 13px; color: #475569; line-height: 1.4; }
-        
-        /* Предупреждение в шагах */
         .steps-warning {
             margin-top: 15px; padding-top: 15px; border-top: 1px dashed #E2E8F0;
             font-size: 11px; color: #94A3B8; line-height: 1.4;
@@ -211,9 +217,9 @@
             <h1>Безопасные сделки</h1>
             <p>Создай предложение, отправь ссылку покупателю. Гарант защитит средства.</p>
         </div>
+        <!-- Встроенная SVG иконка денег -->
         <svg class="hero-image" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="12" cy="12" r="8" stroke="white" stroke-width="1.5" opacity="0.5"/>
-            <path d="M12 8V16M15 12H9" stroke="white" stroke-width="2" stroke-linecap="round" opacity="0.8"/>
+            <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.59 20 4 16.41 4 12C4 7.59 7.59 4 12 4C16.41 4 20 7.59 20 12C20 16.41 16.41 20 12 20ZM11 15H13V17H11V15ZM11 7H13V13H11V7Z" fill="white" opacity="0.8"/>
         </svg>
     </div>
 
@@ -222,6 +228,40 @@
         <div class="stat-item"><div class="stat-value">1,248</div><div class="stat-label">Сделок</div></div>
         <div class="stat-item"><div class="stat-value">4.9</div><div class="stat-label">Рейтинг</div></div>
         <div class="stat-item"><div class="stat-value">24/7</div><div class="stat-label">Онлайн</div></div>
+    </div>
+
+    <!-- Карточки -->
+    <div class="card anim delay-2">
+        <div class="card-left">
+            <!-- SVG Подарок -->
+            <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 12 20 22 4 22 4 12"></polyline>
+                <rect x="2" y="7" width="20" height="5"></rect>
+                <line x1="12" y1="22" x2="12" y2="7"></line>
+                <path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"></path>
+                <path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"></path>
+            </svg>
+            <div class="card-text">
+                <h2>20%</h2>
+                <p>Реферальная программа</p>
+            </div>
+        </div>
+        <div class="card-right">Приглашай</div>
+    </div>
+
+    <div class="card anim delay-2">
+        <div class="card-left">
+            <!-- SVG Щит -->
+            <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                <path d="M9 12l2 2 4-4"></path>
+            </svg>
+            <div class="card-text">
+                <h2>1%</h2>
+                <p>Комиссия сервиса</p>
+            </div>
+        </div>
+        <div class="card-right">Гарант</div>
     </div>
 
     <!-- Блок "Как проходит сделка" -->
@@ -252,6 +292,7 @@
 
     <!-- Инфо блок -->
     <div class="info-block anim delay-3">
+        <!-- SVG Замок -->
         <svg class="info-icon" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
             <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
